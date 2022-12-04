@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>scripts.controller &mdash; Robot watchdog in an indoor environment 1.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> Robot watchdog in an indoor environment
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Robot watchdog in an indoor environment</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>scripts.controller</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for scripts.controller</h1><div class="highlight"><pre>
+<span></span><span class="ch">#! /usr/bin/env python</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">.. module:: controller</span>
+<span class="sd">    :platform: Unix</span>
+<span class="sd">    :synopsis: Python script representing controller</span>
+<span class="sd">.. moduleauthor:: Jabrail Chumakov &lt;jabrail.chumakov@nu.edu.kz&gt;</span>
+
+<span class="sd">This script allows the robot to move between rooms and also controls the battery level.</span>
+
+<span class="sd">Packages:</span>
+<span class="sd">    `Colorama &lt;https://pypi.org/project/colorama/&gt;`_: Allows you to make output text colorful</span>
+<span class="sd">    </span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">rospy</span>
+<span class="c1"># Import colorama to make colorful text printed on to console</span>
+<span class="kn">from</span> <span class="nn">colorama</span> <span class="kn">import</span> <span class="n">Fore</span><span class="p">,</span> <span class="n">Back</span><span class="p">,</span> <span class="n">Style</span>
+<span class="c1"># Import the ActionServer implementation used.</span>
+<span class="kn">from</span> <span class="nn">actionlib</span> <span class="kn">import</span> <span class="n">SimpleActionServer</span>
+<span class="c1"># Required to pass the `PlanAction` type for instantiating the `SimpleActionServer`.</span>
+<span class="kn">import</span> <span class="nn">robot_watchdog_in_an_indoor_environment</span>  
+<span class="c1"># Import constant name defined to structure the architecture.</span>
+<span class="kn">from</span> <span class="nn">robot_watchdog_in_an_indoor_environment</span> <span class="kn">import</span> <span class="n">architecture_name_mapper</span> <span class="k">as</span> <span class="n">anm</span>
+<span class="c1"># Import custom message, actions and services.</span>
+<span class="kn">from</span> <span class="nn">robot_watchdog_in_an_indoor_environment.msg</span> <span class="kn">import</span> <span class="n">ControlFeedback</span><span class="p">,</span> <span class="n">ControlResult</span><span class="p">,</span> <span class="n">Point</span>
+<span class="kn">from</span> <span class="nn">robot_watchdog_in_an_indoor_environment.srv</span> <span class="kn">import</span> <span class="n">SetPose</span><span class="p">,</span> <span class="n">GetPose</span><span class="p">,</span> <span class="n">Battery</span> 
+
+<span class="c1"># A tag for identifying logs producer.</span>
+<span class="n">LOG_TAG</span> <span class="o">=</span> <span class="n">anm</span><span class="o">.</span><span class="n">NODE_CONTROLLER</span>
+    
+<span class="c1"># An action server to simulate motion controlling.</span>
+<span class="c1"># Given a plan as a set of via points, it simulate the movements</span>
+<span class="c1"># to reach each point with a random delay. This server updates</span>
+<span class="c1"># the current robot position stored in the `robot-state` node.</span>
+<span class="k">class</span> <span class="nc">ControllingAction</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This funstion is used to start the action server.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            none</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            none</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Instantiate and start the action server based on the `SimpleActionServer` class.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_as</span> <span class="o">=</span> <span class="n">SimpleActionServer</span><span class="p">(</span><span class="n">anm</span><span class="o">.</span><span class="n">ACTION_CONTROLLER</span><span class="p">,</span>
+                                      <span class="n">robot_watchdog_in_an_indoor_environment</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">ControlAction</span><span class="p">,</span>
+                                      <span class="n">execute_cb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">execute_callback</span><span class="p">,</span>
+                                      <span class="n">auto_start</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_as</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="c1"># Log information.</span>
+        <span class="n">log_msg</span> <span class="o">=</span> <span class="p">(</span><span class="n">Fore</span><span class="o">.</span><span class="n">GREEN</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;Action Server `</span><span class="si">{</span><span class="n">anm</span><span class="o">.</span><span class="n">ACTION_CONTROLLER</span><span class="si">}</span><span class="s1">` initialised. It will navigate trough the plan with a delay &#39;</span> 
+                   <span class="sa">f</span><span class="s1">&#39;between each via point spanning.&#39;</span><span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="n">anm</span><span class="o">.</span><span class="n">tag_log</span><span class="p">(</span><span class="n">log_msg</span><span class="p">,</span> <span class="n">LOG_TAG</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[39m&#39;</span><span class="p">)</span> <span class="c1"># Makes text from Green to normal</span>
+
+    <span class="c1"># The callback invoked when a client set a goal to the `controller` server.</span>
+    <span class="c1"># This function requires a list of via points (i.e., the plan), and it simulate</span>
+    <span class="c1"># a movement through each point with a delay spanning in </span>
+    <span class="c1"># [&#39;self._random_motion_time[0]`, `self._random_motion_time[1]`).</span>
+    <span class="c1"># As soon as each via point is reached, the related robot position is updated</span>
+    <span class="c1"># in the `robot-state` node.</span>
+    <span class="k">def</span> <span class="nf">execute_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">goal</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This callback function is used for moving a robot with a given goal point.</span>
+<span class="sd">        It reads the plan from the read point and set the new position for the robot each time.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            none</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            none</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Check if the provided plan is processable. If not, this service will be aborted.</span>
+        <span class="k">if</span> <span class="n">goal</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">goal</span><span class="o">.</span><span class="n">via_points</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">goal</span><span class="o">.</span><span class="n">via_points</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="n">anm</span><span class="o">.</span><span class="n">tag_log</span><span class="p">(</span><span class="s1">&#39;No via points provided! This service will be aborted!&#39;</span><span class="p">,</span> <span class="n">LOG_TAG</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_as</span><span class="o">.</span><span class="n">set_aborted</span><span class="p">()</span>
+            <span class="k">return</span>
+
+        <span class="c1"># Construct the feedback and loop for each via point.</span>
+        <span class="n">feedback</span> <span class="o">=</span> <span class="n">ControlFeedback</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">goal</span><span class="o">.</span><span class="n">via_points</span><span class="p">:</span>
+            <span class="c1"># Check that the client did not cancel this service.</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_as</span><span class="o">.</span><span class="n">is_preempt_requested</span><span class="p">():</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="n">anm</span><span class="o">.</span><span class="n">tag_log</span><span class="p">(</span><span class="s1">&#39;Service has been cancelled by the client!&#39;</span><span class="p">,</span> <span class="n">LOG_TAG</span><span class="p">))</span>
+                <span class="c1"># Actually cancel this service.</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_as</span><span class="o">.</span><span class="n">set_preempted</span><span class="p">()</span>
+                <span class="k">return</span>
+                <span class="c1"># Wait before to reach the following via point. This is just for testing purposes.</span>
+            <span class="n">robot_position</span> <span class="o">=</span> <span class="n">Point</span><span class="p">()</span>
+            <span class="n">robot_position</span> <span class="o">=</span> <span class="n">get_pose</span><span class="p">()</span>
+            <span class="c1"># Publish a feedback to the client to simulate that a via point has been reached. </span>
+            <span class="n">feedback</span><span class="o">.</span><span class="n">reached_point</span> <span class="o">=</span> <span class="n">point</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_as</span><span class="o">.</span><span class="n">publish_feedback</span><span class="p">(</span><span class="n">feedback</span><span class="p">)</span>
+            <span class="c1"># Set the new current position into the `robot-state` node.</span>
+            <span class="n">set_pose</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
+            <span class="n">discharge_step</span><span class="p">()</span>
+
+        <span class="c1"># Log current robot position.</span>
+        <span class="n">log_msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;A robot is moving to (</span><span class="si">{</span><span class="n">point</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">point</span><span class="o">.</span><span class="n">y</span><span class="si">}</span><span class="s1">) coordinates.&#39;</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="n">anm</span><span class="o">.</span><span class="n">tag_log</span><span class="p">(</span><span class="n">log_msg</span><span class="p">,</span> <span class="n">LOG_TAG</span><span class="p">))</span>
+        <span class="c1"># Publish the results to the client.</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">ControlResult</span><span class="p">()</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">reached_point</span> <span class="o">=</span> <span class="n">feedback</span><span class="o">.</span><span class="n">reached_point</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="n">anm</span><span class="o">.</span><span class="n">tag_log</span><span class="p">(</span><span class="n">Fore</span><span class="o">.</span><span class="n">GREEN</span> <span class="o">+</span> <span class="s1">&#39;Motion control successes.&#39;</span><span class="p">,</span> <span class="n">LOG_TAG</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_as</span><span class="o">.</span><span class="n">set_succeeded</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[39m&#39;</span><span class="p">)</span> <span class="c1"># Makes text from Green to normal</span>
+        <span class="k">return</span>  <span class="c1"># Succeeded.</span>
+
+<span class="c1"># Update the current robot `pose` stored in the `robot-state` node.</span>
+<span class="c1"># This method is performed for each point provided in the action&#39;s server feedback.</span>
+<div class="viewcode-block" id="set_pose"><a class="viewcode-back" href="../../index.html#scripts.controller.set_pose">[docs]</a><span class="k">def</span> <span class="nf">set_pose</span><span class="p">(</span><span class="n">pose</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function that updates the current robot&#39;s position stored in the `robot-state` node.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        pose: Pose</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        none</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Eventually, wait for the server to be initialised.</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="n">anm</span><span class="o">.</span><span class="n">SERVER_SET_POSE</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Call the service and set the current robot position.</span>
+        <span class="n">service</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="n">anm</span><span class="o">.</span><span class="n">SERVER_SET_POSE</span><span class="p">,</span> <span class="n">SetPose</span><span class="p">)</span>
+        <span class="n">service</span><span class="p">(</span><span class="n">pose</span><span class="p">)</span>  <span class="c1"># The `response` is not used.</span>
+    <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">log_msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Server cannot set current robot position: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="n">anm</span><span class="o">.</span><span class="n">tag_log</span><span class="p">(</span><span class="n">log_msg</span><span class="p">,</span> <span class="n">LOG_TAG</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="get_pose"><a class="viewcode-back" href="../../index.html#scripts.controller.get_pose">[docs]</a><span class="k">def</span> <span class="nf">get_pose</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Obtain current robot position stored in the `robot-state` node.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        pose: Pose</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Eventually, wait for the server to be initialised.</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="n">anm</span><span class="o">.</span><span class="n">SERVER_GET_POSE</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Call the service and get the current robot position.</span>
+        <span class="n">service</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="n">anm</span><span class="o">.</span><span class="n">SERVER_GET_POSE</span><span class="p">,</span> <span class="n">GetPose</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">service</span><span class="p">()</span>
+        <span class="n">pose</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">pose</span>
+        <span class="k">return</span> <span class="n">pose</span>
+    <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">log_msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Server cannot get current robot position: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="n">anm</span><span class="o">.</span><span class="n">tag_log</span><span class="p">(</span><span class="n">log_msg</span><span class="p">,</span> <span class="n">LOG_TAG</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="charge_sender"><a class="viewcode-back" href="../../index.html#scripts.controller.charge_sender">[docs]</a><span class="k">def</span> <span class="nf">charge_sender</span><span class="p">(</span><span class="n">charge_level</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function that updates the current robot&#39;s charge level stored in the `robot-state` node.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        charge_level(Int): The charge level</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Eventually, wait for the server to be initialised.</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="n">anm</span><span class="o">.</span><span class="n">SERVER_SEND_CHARGE</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Call the service and send the current robot charge capacity.</span>
+        <span class="n">service</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="n">anm</span><span class="o">.</span><span class="n">SERVER_SEND_CHARGE</span><span class="p">,</span> <span class="n">Battery</span><span class="p">)</span>
+        <span class="n">service</span><span class="p">(</span><span class="n">charge_level</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">log_msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Server cannot send actual charge state: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="n">anm</span><span class="o">.</span><span class="n">tag_log</span><span class="p">(</span><span class="n">log_msg</span><span class="p">,</span> <span class="n">LOG_TAG</span><span class="p">))</span></div>
+        
+<div class="viewcode-block" id="charge_receiver"><a class="viewcode-back" href="../../index.html#scripts.controller.charge_receiver">[docs]</a><span class="k">def</span> <span class="nf">charge_receiver</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Obtain current robot charge level stored in the `robot-state` node.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        battery_level(Int): The charge level</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Eventually, wait for the server to be initialised.</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="n">anm</span><span class="o">.</span><span class="n">SERVER_RECEIVE_CHARGE</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Call the service and receieve the current robot charge capacity.</span>
+        <span class="n">service</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="n">anm</span><span class="o">.</span><span class="n">SERVER_RECEIVE_CHARGE</span><span class="p">,</span> <span class="n">Battery</span><span class="p">)</span>
+        <span class="n">charge_level</span> <span class="o">=</span> <span class="n">service</span><span class="p">()</span><span class="o">.</span><span class="n">charge_level</span>
+        <span class="k">return</span> <span class="n">charge_level</span>
+    <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">log_msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Server cannot receive actual charge state: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="n">anm</span><span class="o">.</span><span class="n">tag_log</span><span class="p">(</span><span class="n">log_msg</span><span class="p">,</span> <span class="n">LOG_TAG</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="discharge_step"><a class="viewcode-back" href="../../index.html#scripts.controller.discharge_step">[docs]</a><span class="k">def</span> <span class="nf">discharge_step</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A function that consumes the charge level for each step robot moves between the rooms.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">charge_level</span> <span class="o">=</span> <span class="n">charge_receiver</span><span class="p">()</span>
+    <span class="n">charge_level</span> <span class="o">=</span> <span class="n">charge_level</span> <span class="o">-</span> <span class="mi">5</span>
+    <span class="n">charge_sender</span><span class="p">(</span><span class="n">charge_level</span><span class="p">)</span></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="c1"># Initialise the node, its action server, and wait.   </span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="n">anm</span><span class="o">.</span><span class="n">NODE_CONTROLLER</span><span class="p">,</span> <span class="n">log_level</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="n">ControllingAction</span><span class="p">()</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">spin</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Jabrail Chumakov.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

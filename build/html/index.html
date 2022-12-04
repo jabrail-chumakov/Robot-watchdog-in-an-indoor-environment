@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to Robot watchdog in an indoor environment’s documentation! &mdash; Robot watchdog in an indoor environment 1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="#" class="icon icon-home"> Robot watchdog in an indoor environment
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Welcome to Robot watchdog in an indoor environment’s documentation!</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+<li><a class="reference internal" href="#module-scripts.controller">Console</a></li>
+<li><a class="reference internal" href="#module-scripts.controller_helper">Console Helper</a></li>
+<li><a class="reference internal" href="#module-scripts.fsm">Finite State Machine</a></li>
+<li><a class="reference internal" href="#module-scripts.planner">Planner</a></li>
+<li><a class="reference internal" href="#module-scripts.planner_helper">Planner Helper</a></li>
+<li><a class="reference internal" href="#module-scripts.robot_states">Robot States</a></li>
+<li><a class="reference internal" href="#architecture-name-mapper">Architecture Name Mapper</a></li>
+<li><a class="reference internal" href="#module-utilities.robot_watchdog_in_an_indoor_environment.topological_map">Topological Map</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Robot watchdog in an indoor environment</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
+      <li>Welcome to Robot watchdog in an indoor environment’s documentation!</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="welcome-to-robot-watchdog-in-an-indoor-environment-s-documentation">
+<h1>Welcome to Robot watchdog in an indoor environment’s documentation!<a class="headerlink" href="#welcome-to-robot-watchdog-in-an-indoor-environment-s-documentation" title="Permalink to this headline"></a></h1>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="module-scripts.controller">
+<span id="console"></span><h1>Console<a class="headerlink" href="#module-scripts.controller" title="Permalink to this headline"></a></h1>
+<span class="target" id="module-controller"></span><p>This script allows the robot to move between rooms and also controls the battery level.</p>
+<dl class="simple">
+<dt>Packages:</dt><dd><p><a class="reference external" href="https://pypi.org/project/colorama/">Colorama</a>: Allows you to make output text colorful</p>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.controller.charge_receiver">
+<span class="sig-prename descclassname"><span class="pre">scripts.controller.</span></span><span class="sig-name descname"><span class="pre">charge_receiver</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/controller.html#charge_receiver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.controller.charge_receiver" title="Permalink to this definition"></a></dt>
+<dd><p>Obtain current robot charge level stored in the <cite>robot-state</cite> node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The charge level</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>battery_level(Int)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.controller.charge_sender">
+<span class="sig-prename descclassname"><span class="pre">scripts.controller.</span></span><span class="sig-name descname"><span class="pre">charge_sender</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">charge_level</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/controller.html#charge_sender"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.controller.charge_sender" title="Permalink to this definition"></a></dt>
+<dd><p>Function that updates the current robot’s charge level stored in the <cite>robot-state</cite> node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>charge_level</strong> (<em>Int</em>) – The charge level</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.controller.discharge_step">
+<span class="sig-prename descclassname"><span class="pre">scripts.controller.</span></span><span class="sig-name descname"><span class="pre">discharge_step</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/controller.html#discharge_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.controller.discharge_step" title="Permalink to this definition"></a></dt>
+<dd><p>A function that consumes the charge level for each step robot moves between the rooms.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.controller.get_pose">
+<span class="sig-prename descclassname"><span class="pre">scripts.controller.</span></span><span class="sig-name descname"><span class="pre">get_pose</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/controller.html#get_pose"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.controller.get_pose" title="Permalink to this definition"></a></dt>
+<dd><p>Obtain current robot position stored in the <cite>robot-state</cite> node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Pose</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>pose</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.controller.set_pose">
+<span class="sig-prename descclassname"><span class="pre">scripts.controller.</span></span><span class="sig-name descname"><span class="pre">set_pose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pose</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/controller.html#set_pose"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.controller.set_pose" title="Permalink to this definition"></a></dt>
+<dd><p>Function that updates the current robot’s position stored in the <cite>robot-state</cite> node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pose</strong> – Pose</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>none</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-scripts.controller_helper">
+<span id="console-helper"></span><h1>Console Helper<a class="headerlink" href="#module-scripts.controller_helper" title="Permalink to this headline"></a></h1>
+<span class="target" id="module-0"></span><p>This script which helps the controller script to move the robot between rooms.</p>
+<dl class="simple">
+<dt>Packages:</dt><dd><p><a class="reference external" href="https://pypi.org/project/colorama/">Colorama</a>: Allows you to make output text colorful</p>
+</dd>
+<dt>Subscribes to:</dt><dd><p>/path</p>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.controller_helper.controller_helper">
+<span class="sig-prename descclassname"><span class="pre">scripts.controller_helper.</span></span><span class="sig-name descname"><span class="pre">controller_helper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">goal</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/controller_helper.html#controller_helper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.controller_helper.controller_helper" title="Permalink to this definition"></a></dt>
+<dd><p>This function allows controller script receive goal coordinates for the robot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>goal</strong> – Goal points</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.controller_helper.controller_helper_results">
+<span class="sig-prename descclassname"><span class="pre">scripts.controller_helper.</span></span><span class="sig-name descname"><span class="pre">controller_helper_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/controller_helper.html#controller_helper_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.controller_helper.controller_helper_results" title="Permalink to this definition"></a></dt>
+<dd><p>Executes controller_helper(results) function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>results</strong> – Coordinates for robot</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-scripts.fsm">
+<span id="finite-state-machine"></span><h1>Finite State Machine<a class="headerlink" href="#module-scripts.fsm" title="Permalink to this headline"></a></h1>
+<span class="target" id="module-1"></span><p>This script updates the ontology obtains the target room and sets the states and transitions for a finite state machine.</p>
+<dl class="simple">
+<dt>Packages:</dt><dd><p><a class="reference external" href="https://pypi.org/project/colorama/">Colorama</a>: Allows you to make output text colorful</p>
+</dd>
+<dt>Publishes to:</dt><dd><p>/point</p>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="scripts.fsm.Corridor1">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">scripts.fsm.</span></span><span class="sig-name descname"><span class="pre">Corridor1</span></span><a class="reference internal" href="_modules/scripts/fsm.html#Corridor1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.fsm.Corridor1" title="Permalink to this definition"></a></dt>
+<dd><p>Conditions for Corridor 1.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="scripts.fsm.Corridor1.execute">
+<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">userdata</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/fsm.html#Corridor1.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.fsm.Corridor1.execute" title="Permalink to this definition"></a></dt>
+<dd><p>This function sends the target room to the planner helper together with updating ontology.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Door 1
+‘D2’(String): Door 2
+‘D5’(String): Door 5
+‘D7’(String): Door 7
+‘Remain’(String): Remain in the same room</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>‘D1’(String)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="scripts.fsm.Corridor2">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">scripts.fsm.</span></span><span class="sig-name descname"><span class="pre">Corridor2</span></span><a class="reference internal" href="_modules/scripts/fsm.html#Corridor2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.fsm.Corridor2" title="Permalink to this definition"></a></dt>
+<dd><p>Conditions for Corridor 2.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="scripts.fsm.Corridor2.execute">
+<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">userdata</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/fsm.html#Corridor2.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.fsm.Corridor2.execute" title="Permalink to this definition"></a></dt>
+<dd><p>This function sends the target room to the planner helper together with updating ontology.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Door 3
+‘D4’(String): Door 4
+‘D5’(String): Door 5
+‘D6’(String): Door 6
+‘Remain’(String): Remain in the same room</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>‘D3’(String)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="scripts.fsm.Room1">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">scripts.fsm.</span></span><span class="sig-name descname"><span class="pre">Room1</span></span><a class="reference internal" href="_modules/scripts/fsm.html#Room1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.fsm.Room1" title="Permalink to this definition"></a></dt>
+<dd><p>Conditions for Room 1.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="scripts.fsm.Room1.execute">
+<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">userdata</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/fsm.html#Room1.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.fsm.Room1.execute" title="Permalink to this definition"></a></dt>
+<dd><p>This function sends the target room to the planner helper together with updating ontology.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Door 1
+‘Remain’(String): Remain in the same room</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>‘D1’(String)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="scripts.fsm.Room2">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">scripts.fsm.</span></span><span class="sig-name descname"><span class="pre">Room2</span></span><a class="reference internal" href="_modules/scripts/fsm.html#Room2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.fsm.Room2" title="Permalink to this definition"></a></dt>
+<dd><p>Conditions for Room 2.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="scripts.fsm.Room2.execute">
+<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">userdata</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/fsm.html#Room2.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.fsm.Room2.execute" title="Permalink to this definition"></a></dt>
+<dd><p>This function sends the target room to the planner helper together with updating ontology.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Door 2
+‘Remain’(String): Remain in the same room</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>‘D2’(String)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="scripts.fsm.Room3">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">scripts.fsm.</span></span><span class="sig-name descname"><span class="pre">Room3</span></span><a class="reference internal" href="_modules/scripts/fsm.html#Room3"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.fsm.Room3" title="Permalink to this definition"></a></dt>
+<dd><p>Conditions for Room 3.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="scripts.fsm.Room3.execute">
+<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">userdata</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/fsm.html#Room3.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.fsm.Room3.execute" title="Permalink to this definition"></a></dt>
+<dd><p>This function sends the target room to the planner helper together with updating ontology.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Door 3
+‘Remain’(String): Remain in the same room</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>‘D3’(String)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="scripts.fsm.Room4">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">scripts.fsm.</span></span><span class="sig-name descname"><span class="pre">Room4</span></span><a class="reference internal" href="_modules/scripts/fsm.html#Room4"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.fsm.Room4" title="Permalink to this definition"></a></dt>
+<dd><p>Conditions for Room 4.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="scripts.fsm.Room4.execute">
+<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">userdata</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/fsm.html#Room4.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.fsm.Room4.execute" title="Permalink to this definition"></a></dt>
+<dd><p>This function sends the target room to the planner helper together with updating ontology.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Door 4
+‘Remain’(String): Remain in the same room</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>‘D4’(String)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="scripts.fsm.RoomE">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">scripts.fsm.</span></span><span class="sig-name descname"><span class="pre">RoomE</span></span><a class="reference internal" href="_modules/scripts/fsm.html#RoomE"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.fsm.RoomE" title="Permalink to this definition"></a></dt>
+<dd><p>Conditions for Room E.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="scripts.fsm.RoomE.execute">
+<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">userdata</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/fsm.html#RoomE.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.fsm.RoomE.execute" title="Permalink to this definition"></a></dt>
+<dd><p>This function put a robot on battery charge and sends the target
+room to the planner helper together with updating ontology.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Door 7
+‘D6’(String): Door 6
+‘Remain’(String): Remain in the same room</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>‘D7’(String)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.fsm.charge_sender">
+<span class="sig-prename descclassname"><span class="pre">scripts.fsm.</span></span><span class="sig-name descname"><span class="pre">charge_sender</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">charge_level</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/fsm.html#charge_sender"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.fsm.charge_sender" title="Permalink to this definition"></a></dt>
+<dd><p>This function creates a service and sends the current charge level.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>charge_level</strong> (<em>Int</em>) – Charge level</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.fsm.goal_execute">
+<span class="sig-prename descclassname"><span class="pre">scripts.fsm.</span></span><span class="sig-name descname"><span class="pre">goal_execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/fsm.html#goal_execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.fsm.goal_execute" title="Permalink to this definition"></a></dt>
+<dd><p>Publishes goal positions for x and y.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>Float</em>) – X position</p></li>
+<li><p><strong>y</strong> (<em>Float</em>) – Y position</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.fsm.location_managing">
+<span class="sig-prename descclassname"><span class="pre">scripts.fsm.</span></span><span class="sig-name descname"><span class="pre">location_managing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">room</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/fsm.html#location_managing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.fsm.location_managing" title="Permalink to this definition"></a></dt>
+<dd><p>A function that manages to which room the robot should move.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.fsm.room_switcher">
+<span class="sig-prename descclassname"><span class="pre">scripts.fsm.</span></span><span class="sig-name descname"><span class="pre">room_switcher</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">room_number</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/fsm.html#room_switcher"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.fsm.room_switcher" title="Permalink to this definition"></a></dt>
+<dd><p>A function that manages which goal execution to run depending on the room.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Goal to which move the robot</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>goal_execute</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-scripts.planner">
+<span id="planner"></span><h1>Planner<a class="headerlink" href="#module-scripts.planner" title="Permalink to this headline"></a></h1>
+<span class="target" id="module-2"></span><p>This script is used for planning the motion.</p>
+<dl class="simple">
+<dt>Packages:</dt><dd><p><a class="reference external" href="https://pypi.org/project/colorama/">Colorama</a>: Allows you to make output text colorful</p>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="scripts.planner.PlaningAction">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">scripts.planner.</span></span><span class="sig-name descname"><span class="pre">PlaningAction</span></span><a class="reference internal" href="_modules/scripts/planner.html#PlaningAction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.planner.PlaningAction" title="Permalink to this definition"></a></dt>
+<dd><p>A class that is used to plan goals from start to target.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="scripts.planner.PlaningAction.execute_callback">
+<span class="sig-name descname"><span class="pre">execute_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">goal</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/planner.html#PlaningAction.execute_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.planner.PlaningAction.execute_callback" title="Permalink to this definition"></a></dt>
+<dd><p>This function checks if the start and target positions are correct and then publishes the results to the client.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>goal</strong> – Goal</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.planner.get_pose">
+<span class="sig-prename descclassname"><span class="pre">scripts.planner.</span></span><span class="sig-name descname"><span class="pre">get_pose</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/planner.html#get_pose"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.planner.get_pose" title="Permalink to this definition"></a></dt>
+<dd><p>This function receives the current position from the server get the pose.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Point</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>pose</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-scripts.planner_helper">
+<span id="planner-helper"></span><h1>Planner Helper<a class="headerlink" href="#module-scripts.planner_helper" title="Permalink to this headline"></a></h1>
+<span class="target" id="module-3"></span><p>This script is used for helping in motion planning.</p>
+<dl class="simple">
+<dt>Packages:</dt><dd><p><a class="reference external" href="https://pypi.org/project/colorama/">Colorama</a>: Allows you to make output text colorful</p>
+</dd>
+<dt>Subscribes to:</dt><dd><p>/path</p>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.planner_helper.planner_helper">
+<span class="sig-prename descclassname"><span class="pre">scripts.planner_helper.</span></span><span class="sig-name descname"><span class="pre">planner_helper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/planner_helper.html#planner_helper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.planner_helper.planner_helper" title="Permalink to this definition"></a></dt>
+<dd><p>This function sends the target goal to the planner script.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>Float</em>) – X position</p></li>
+<li><p><strong>y</strong> (<em>Float</em>) – Y position</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.planner_helper.planner_helper_results">
+<span class="sig-prename descclassname"><span class="pre">scripts.planner_helper.</span></span><span class="sig-name descname"><span class="pre">planner_helper_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/planner_helper.html#planner_helper_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.planner_helper.planner_helper_results" title="Permalink to this definition"></a></dt>
+<dd><p>This function publishes planner helper so the planner script can receive info about target x and y coordinates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>results</strong> – Coordinates for robot</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-scripts.robot_states">
+<span id="robot-states"></span><h1>Robot States<a class="headerlink" href="#module-scripts.robot_states" title="Permalink to this headline"></a></h1>
+<span class="target" id="module-4"></span><p>This script is used for managing robot states.</p>
+<dl class="simple">
+<dt>Packages:</dt><dd><p><a class="reference external" href="https://pypi.org/project/colorama/">Colorama</a>: Allows you to make output text colorful</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="architecture-name-mapper">
+<h1>Architecture Name Mapper<a class="headerlink" href="#architecture-name-mapper" title="Permalink to this headline"></a></h1>
+<span class="target" id="module-utilities.robot_watchdog_in_an_indoor_environment.architecture_name_mapper"></span><span class="target" id="module-5"></span><p>This script is utilized by the package to define each variable’s name.</p>
+<dl class="simple">
+<dt>Packages:</dt><dd><p><a class="reference external" href="https://pypi.org/project/colorama/">Colorama</a>: Allows you to make output text colorful</p>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="utilities.robot_watchdog_in_an_indoor_environment.architecture_name_mapper.tag_log">
+<span class="sig-prename descclassname"><span class="pre">utilities.robot_watchdog_in_an_indoor_environment.architecture_name_mapper.</span></span><span class="sig-name descname"><span class="pre">tag_log</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">producer_tag</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utilities/robot_watchdog_in_an_indoor_environment/architecture_name_mapper.html#tag_log"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utilities.robot_watchdog_in_an_indoor_environment.architecture_name_mapper.tag_log" title="Permalink to this definition"></a></dt>
+<dd><p>The log tag that is displayed in the finite state machine while it is operating is created using this function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>msg</strong> (<em>String</em>) – Message to display</p></li>
+<li><p><strong>producer_tag</strong> (<em>String</em>) – Name of the state</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Message to the log</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>log_msg(String)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-utilities.robot_watchdog_in_an_indoor_environment.topological_map">
+<span id="topological-map"></span><h1>Topological Map<a class="headerlink" href="#module-utilities.robot_watchdog_in_an_indoor_environment.topological_map" title="Permalink to this headline"></a></h1>
+<span class="target" id="module-6"></span><p>This script is used in order to work with topological map with <code class="docutils literal notranslate"><span class="pre">armor_client.py</span></code>.</p>
+<dl class="simple">
+<dt>Packages:</dt><dd><p><a class="reference external" href="https://pypi.org/project/colorama/">Colorama</a>: Allows you to make output text colorful</p>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="utilities.robot_watchdog_in_an_indoor_environment.topological_map.TopologicalMap">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utilities.robot_watchdog_in_an_indoor_environment.topological_map.</span></span><span class="sig-name descname"><span class="pre">TopologicalMap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_tag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_time</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utilities/robot_watchdog_in_an_indoor_environment/topological_map.html#TopologicalMap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utilities.robot_watchdog_in_an_indoor_environment.topological_map.TopologicalMap" title="Permalink to this definition"></a></dt>
+<dd><p>Topological map with ontology implementation class.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="utilities.robot_watchdog_in_an_indoor_environment.topological_map.TopologicalMap.add_individuals_to_classes">
+<span class="sig-name descname"><span class="pre">add_individuals_to_classes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/utilities/robot_watchdog_in_an_indoor_environment/topological_map.html#TopologicalMap.add_individuals_to_classes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utilities.robot_watchdog_in_an_indoor_environment.topological_map.TopologicalMap.add_individuals_to_classes" title="Permalink to this definition"></a></dt>
+<dd><p>Adding rooms, corridors, doors, and a robot to the topological map.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utilities.robot_watchdog_in_an_indoor_environment.topological_map.TopologicalMap.add_last_visit_times">
+<span class="sig-name descname"><span class="pre">add_last_visit_times</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/utilities/robot_watchdog_in_an_indoor_environment/topological_map.html#TopologicalMap.add_last_visit_times"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utilities.robot_watchdog_in_an_indoor_environment.topological_map.TopologicalMap.add_last_visit_times" title="Permalink to this definition"></a></dt>
+<dd><p>Function for managing last visit time.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utilities.robot_watchdog_in_an_indoor_environment.topological_map.TopologicalMap.add_robot">
+<span class="sig-name descname"><span class="pre">add_robot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/utilities/robot_watchdog_in_an_indoor_environment/topological_map.html#TopologicalMap.add_robot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utilities.robot_watchdog_in_an_indoor_environment.topological_map.TopologicalMap.add_robot" title="Permalink to this definition"></a></dt>
+<dd><p>A function that adds a robot in a particular room in current with charge level and threshold for turning back.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utilities.robot_watchdog_in_an_indoor_environment.topological_map.TopologicalMap.assign_doors_to_rooms">
+<span class="sig-name descname"><span class="pre">assign_doors_to_rooms</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/utilities/robot_watchdog_in_an_indoor_environment/topological_map.html#TopologicalMap.assign_doors_to_rooms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utilities.robot_watchdog_in_an_indoor_environment.topological_map.TopologicalMap.assign_doors_to_rooms" title="Permalink to this definition"></a></dt>
+<dd><p>Function that assigns each door to each room.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utilities.robot_watchdog_in_an_indoor_environment.topological_map.TopologicalMap.cut_dataprop">
+<span class="sig-name descname"><span class="pre">cut_dataprop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_prop</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utilities/robot_watchdog_in_an_indoor_environment/topological_map.html#TopologicalMap.cut_dataprop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utilities.robot_watchdog_in_an_indoor_environment.topological_map.TopologicalMap.cut_dataprop" title="Permalink to this definition"></a></dt>
+<dd><p>A function that removes the data properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Data properties</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>data_prop(String)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utilities.robot_watchdog_in_an_indoor_environment.topological_map.TopologicalMap.cut_dataprop_list">
+<span class="sig-name descname"><span class="pre">cut_dataprop_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_prop_list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utilities/robot_watchdog_in_an_indoor_environment/topological_map.html#TopologicalMap.cut_dataprop_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utilities.robot_watchdog_in_an_indoor_environment.topological_map.TopologicalMap.cut_dataprop_list" title="Permalink to this definition"></a></dt>
+<dd><p>A function that removes the data properties from the list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Data properties list</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>data_prop_list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utilities.robot_watchdog_in_an_indoor_environment.topological_map.TopologicalMap.disjoint_individuals">
+<span class="sig-name descname"><span class="pre">disjoint_individuals</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/utilities/robot_watchdog_in_an_indoor_environment/topological_map.html#TopologicalMap.disjoint_individuals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utilities.robot_watchdog_in_an_indoor_environment.topological_map.TopologicalMap.disjoint_individuals" title="Permalink to this definition"></a></dt>
+<dd><p>Setting up of transitions between rooms and doors.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utilities.robot_watchdog_in_an_indoor_environment.topological_map.TopologicalMap.get_location">
+<span class="sig-name descname"><span class="pre">get_location</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/utilities/robot_watchdog_in_an_indoor_environment/topological_map.html#TopologicalMap.get_location"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utilities.robot_watchdog_in_an_indoor_environment.topological_map.TopologicalMap.get_location" title="Permalink to this definition"></a></dt>
+<dd><p>A function that checks where the robot is now and updates ontology in correspondence with its location.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Is in which room</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>is_in(String)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utilities.robot_watchdog_in_an_indoor_environment.topological_map.TopologicalMap.get_pose_client">
+<span class="sig-name descname"><span class="pre">get_pose_client</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/utilities/robot_watchdog_in_an_indoor_environment/topological_map.html#TopologicalMap.get_pose_client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utilities.robot_watchdog_in_an_indoor_environment.topological_map.TopologicalMap.get_pose_client" title="Permalink to this definition"></a></dt>
+<dd><p>A function that receives pose.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Pose</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>pose</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utilities.robot_watchdog_in_an_indoor_environment.topological_map.TopologicalMap.receive_charge_level_client">
+<span class="sig-name descname"><span class="pre">receive_charge_level_client</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/utilities/robot_watchdog_in_an_indoor_environment/topological_map.html#TopologicalMap.receive_charge_level_client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utilities.robot_watchdog_in_an_indoor_environment.topological_map.TopologicalMap.receive_charge_level_client" title="Permalink to this definition"></a></dt>
+<dd><p>A function receives charge level.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Charge level</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>charge_level(Int)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utilities.robot_watchdog_in_an_indoor_environment.topological_map.TopologicalMap.update_ontology">
+<span class="sig-name descname"><span class="pre">update_ontology</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">current_time</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utilities/robot_watchdog_in_an_indoor_environment/topological_map.html#TopologicalMap.update_ontology"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utilities.robot_watchdog_in_an_indoor_environment.topological_map.TopologicalMap.update_ontology" title="Permalink to this definition"></a></dt>
+<dd><p>A function that updates ontology with managing threshold for the last visited room and charge level.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Target room</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>target_room(String)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Jabrail Chumakov.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>scripts.controller_helper &mdash; Robot watchdog in an indoor environment 1.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> Robot watchdog in an indoor environment
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Robot watchdog in an indoor environment</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>scripts.controller_helper</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for scripts.controller_helper</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">.. module:: controller</span>
+<span class="sd">    :platform: Unix</span>
+<span class="sd">    :synopsis: Python script representing controller</span>
+<span class="sd">.. moduleauthor:: Jabrail Chumakov &lt;jabrail.chumakov@nu.edu.kz&gt;</span>
+
+<span class="sd">This script which helps the controller script to move the robot between rooms.</span>
+
+<span class="sd">Packages:</span>
+<span class="sd">    `Colorama &lt;https://pypi.org/project/colorama/&gt;`_: Allows you to make output text colorful</span>
+<span class="sd">    </span>
+<span class="sd">Subscribes to:</span>
+<span class="sd">    /path </span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">rospy</span>
+<span class="c1"># Import colorama to make colorful text printed on to console</span>
+<span class="kn">from</span> <span class="nn">colorama</span> <span class="kn">import</span> <span class="n">Fore</span><span class="p">,</span> <span class="n">Back</span><span class="p">,</span> <span class="n">Style</span>
+<span class="c1"># Import the ActionServer implementation used.</span>
+<span class="kn">from</span> <span class="nn">actionlib</span> <span class="kn">import</span> <span class="n">SimpleActionClient</span>
+ <span class="c1"># Required to pass the `ControlAction` type for instantiating the `SimpleActionServer`.</span>
+<span class="kn">import</span> <span class="nn">robot_watchdog_in_an_indoor_environment.msg</span> 
+<span class="c1"># Import constant name defined to structure the architecture.</span>
+<span class="kn">from</span> <span class="nn">robot_watchdog_in_an_indoor_environment</span> <span class="kn">import</span> <span class="n">architecture_name_mapper</span> <span class="k">as</span> <span class="n">anm</span>
+
+<span class="c1"># A tag for identifying logs producer.</span>
+<span class="n">LOG_TAG</span> <span class="o">=</span> <span class="n">anm</span><span class="o">.</span><span class="n">NODE_CONTROLLER_HELPER</span>
+
+<div class="viewcode-block" id="controller_helper"><a class="viewcode-back" href="../../index.html#scripts.controller_helper.controller_helper">[docs]</a><span class="k">def</span> <span class="nf">controller_helper</span><span class="p">(</span><span class="n">goal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function allows controller script receive goal coordinates for the robot.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        goal: Goal points</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Instantiate and start the action controller client based on the `SimpleActionClient` class.</span>
+    <span class="n">helper</span> <span class="o">=</span> <span class="n">SimpleActionClient</span><span class="p">(</span><span class="n">anm</span><span class="o">.</span><span class="n">ACTION_CONTROLLER</span><span class="p">,</span>
+                                <span class="n">robot_watchdog_in_an_indoor_environment</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">ControlAction</span><span class="p">)</span>
+    <span class="c1"># Waiting for initialization of the server.</span>
+    <span class="n">helper</span><span class="o">.</span><span class="n">wait_for_server</span><span class="p">()</span>
+    <span class="c1"># Communicate with server about robot&#39;s goal.</span>
+    <span class="n">helper</span><span class="o">.</span><span class="n">send_goal</span><span class="p">(</span><span class="n">goal</span><span class="p">)</span>
+    <span class="n">timeout</span> <span class="o">=</span> <span class="n">helper</span><span class="o">.</span><span class="n">wait_for_result</span><span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">15</span><span class="p">))</span>
+    <span class="c1"># If movement to the final goal is finished before timeout</span>
+    <span class="k">if</span> <span class="n">timeout</span><span class="p">:</span>
+        <span class="n">log_msg</span> <span class="o">=</span> <span class="n">Fore</span><span class="o">.</span><span class="n">GREEN</span> <span class="o">+</span> <span class="s1">&#39;A robot reached the final goal!&#39;</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="n">anm</span><span class="o">.</span><span class="n">tag_log</span><span class="p">(</span><span class="n">log_msg</span><span class="p">,</span> <span class="n">LOG_TAG</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[39m&#39;</span><span class="p">)</span> <span class="c1"># Makes text from Green to normal</span>
+        <span class="k">return</span> <span class="n">helper</span><span class="o">.</span><span class="n">get_result</span><span class="p">()</span>
+    <span class="c1"># Otherwise</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">log_msg</span> <span class="o">=</span> <span class="n">Fore</span><span class="o">.</span><span class="n">RED</span> <span class="o">+</span> <span class="s1">&#39;A robot was not able to reach final goal!&#39;</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="n">anm</span><span class="o">.</span><span class="n">tag_log</span><span class="p">(</span><span class="n">log_msg</span><span class="p">,</span> <span class="n">LOG_TAG</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[39m&#39;</span><span class="p">)</span> <span class="c1"># Makes text from Green to normal</span>
+        <span class="n">helper</span><span class="o">.</span><span class="n">cancel_all_goals</span><span class="p">()</span></div>
+        
+<div class="viewcode-block" id="controller_helper_results"><a class="viewcode-back" href="../../index.html#scripts.controller_helper.controller_helper_results">[docs]</a><span class="k">def</span> <span class="nf">controller_helper_results</span><span class="p">(</span><span class="n">results</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Executes controller_helper(results) function.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        results: Coordinates for robot</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">controller_helper</span><span class="p">(</span><span class="n">results</span><span class="p">)</span></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="c1"># Initialize the node, subscribe, and wait.</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="n">anm</span><span class="o">.</span><span class="n">NODE_CONTROLLER_HELPER</span><span class="p">,</span> <span class="n">log_level</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="s1">&#39;/path&#39;</span><span class="p">,</span> <span class="n">robot_watchdog_in_an_indoor_environment</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">PlanResult</span><span class="p">,</span> <span class="n">controller_helper_results</span><span class="p">)</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">spin</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Jabrail Chumakov.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

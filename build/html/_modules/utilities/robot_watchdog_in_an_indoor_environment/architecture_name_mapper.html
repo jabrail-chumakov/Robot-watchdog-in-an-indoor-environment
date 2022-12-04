@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>utilities.robot_watchdog_in_an_indoor_environment.architecture_name_mapper &mdash; Robot watchdog in an indoor environment 1.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> Robot watchdog in an indoor environment
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Robot watchdog in an indoor environment</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      <li>utilities.robot_watchdog_in_an_indoor_environment.architecture_name_mapper</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for utilities.robot_watchdog_in_an_indoor_environment.architecture_name_mapper</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">.. module:: controller</span>
+<span class="sd">    :platform: Unix</span>
+<span class="sd">    :synopsis: Python script representing controller</span>
+<span class="sd">.. moduleauthor:: Jabrail Chumakov &lt;jabrail.chumakov@nu.edu.kz&gt;</span>
+
+<span class="sd">This script is utilized by the package to define each variable&#39;s name.</span>
+
+<span class="sd">Packages:</span>
+<span class="sd">    `Colorama &lt;https://pypi.org/project/colorama/&gt;`_: Allows you to make output text colorful</span>
+<span class="sd">    </span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">rospy</span>
+
+<span class="c1"># The name of the parameter to define the environment size.</span>
+<span class="c1"># It should be a list `[max_x, max_y]` such that x:[0, `max_x`) and y:[0, `max_y`).</span>
+<span class="n">PARAM_ENVIRONMENT_SIZE</span> <span class="o">=</span> <span class="s1">&#39;config/environment_size&#39;</span>
+
+<span class="c1"># The name of parameter to set the initial robot position.</span>
+<span class="n">PARAM_INITIAL_POSE</span> <span class="o">=</span> <span class="s1">&#39;state/initial_pose&#39;</span>
+
+<span class="c1"># -------------------------------------------------</span>
+
+<span class="c1"># The name of the finite state machine node.</span>
+<span class="n">NODE_FSM</span> <span class="o">=</span> <span class="s1">&#39;fsm&#39;</span>
+
+<span class="c1"># ---------------------------------------------------------</span>
+
+<span class="c1"># The name of the node representing the shared knowledge required for this scenario.</span>
+<span class="n">NODE_ROBOT_STATE</span> <span class="o">=</span> <span class="s1">&#39;robot-state&#39;</span>
+
+<span class="c1"># The name of the server to get the current robot pose.</span>
+<span class="n">SERVER_GET_POSE</span> <span class="o">=</span> <span class="s1">&#39;state/get_pose&#39;</span>
+
+<span class="c1"># The name of the server to set the current robot pose. </span>
+<span class="n">SERVER_SET_POSE</span> <span class="o">=</span> <span class="s1">&#39;state/set_pose&#39;</span>
+
+<span class="c1"># The name of the server to receive the current robot&#39;s charge level.</span>
+<span class="n">SERVER_RECEIVE_CHARGE</span> <span class="o">=</span> <span class="s1">&#39;state/receive_charge_level&#39;</span>
+
+<span class="c1"># The name of the server to send the current robot&#39;s charge level. </span>
+<span class="n">SERVER_SEND_CHARGE</span> <span class="o">=</span> <span class="s1">&#39;state/send_charge_level&#39;</span>
+
+<span class="c1"># ---------------------------------------------------------</span>
+
+<span class="c1"># The name of the controller node.s</span>
+<span class="n">NODE_CONTROLLER</span> <span class="o">=</span> <span class="s1">&#39;controller&#39;</span>
+
+<span class="c1"># The name of the action server solving the motion control problem.</span>
+<span class="n">ACTION_CONTROLLER</span> <span class="o">=</span> <span class="s1">&#39;motion/controller&#39;</span>
+
+<span class="c1"># The name of the controller helper node.</span>
+<span class="n">NODE_CONTROLLER_HELPER</span> <span class="o">=</span> <span class="s1">&#39;controller_helper&#39;</span>
+
+<span class="c1"># The name of the planner node.</span>
+<span class="n">NODE_PLANNER</span> <span class="o">=</span> <span class="s1">&#39;planner&#39;</span>
+
+<span class="c1"># The name of the action server solving the motion planning problem.</span>
+<span class="n">ACTION_PLANNER</span> <span class="o">=</span> <span class="s1">&#39;motion/planner&#39;</span>
+
+<span class="c1"># The name of the planner helper node.</span>
+<span class="n">NODE_PLANNER_HELPER</span> <span class="o">=</span> <span class="s1">&#39;planner_helper&#39;</span>
+
+<span class="c1"># -------------------------------------------------</span>
+
+<span class="c1"># Function used to label each log with a producer tag.</span>
+<div class="viewcode-block" id="tag_log"><a class="viewcode-back" href="../../../index.html#utilities.robot_watchdog_in_an_indoor_environment.architecture_name_mapper.tag_log">[docs]</a><span class="k">def</span> <span class="nf">tag_log</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">producer_tag</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The log tag that is displayed in the finite state machine while it is operating is created using this function.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        msg(String): Message to display</span>
+<span class="sd">        producer_tag(String): Name of the state</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        log_msg(String): Message to the log</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="s1">&#39;@</span><span class="si">%s</span><span class="s1">&gt;&gt; </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">producer_tag</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Jabrail Chumakov.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
