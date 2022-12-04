@@ -3,7 +3,9 @@
 Author: *Luca Buoncomapgni*
 
 ---
+## Documentation
 
+The documentation can be found [here](https://jabrail-chumakov.github.io/Robot-watchdog-in-an-indoor-environment/)
 ## Introduction
 
 This repository contains ROS-based software that simulates a behavioural architecture.
