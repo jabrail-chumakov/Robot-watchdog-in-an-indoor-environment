@@ -1,5 +1,6 @@
 # Robot watchdog in an indoor environment
-A ROS-based exercise for the Experimental Robotics Laboratory course held at the University of Genoa. 
+A ROS-based exercise for the Experimental Robotics Laboratory course held at the University of Genoa.
+
 Author: [Jabrail Chumakov](https://github.com/jabrail-chumakov)
 
 ---
