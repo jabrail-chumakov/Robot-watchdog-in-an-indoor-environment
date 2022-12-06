@@ -7,54 +7,17 @@ Author: [Jabrail Chumakov](https://github.com/jabrail-chumakov)
 ## Documentation
 
 The documentation can be found [here](https://jabrail-chumakov.github.io/Robot-watchdog-in-an-indoor-environment/)
+
 ## Introduction
 
-This repository contains ROS-based software that simulates a behavioural architecture.
-The objective is twofold: show examples of ROS software, and provide some guidelines 
-for bootstrapping software architectures for robotics.
-
-In particular, this repository showcases the usage of *roslaunch* and
-*parameters*, as well as the implementation of ROS *nodes*, *servers* and *actions*, with related 
-*messages*; including arrays of custom items. These examples are provided in Python 3.
-
-In addition, the architecture has been bootstrapped with an approach based on the following 
-procedure.
- 1. Define each software component with a random-based dummy implementation, i.e., mind only 
-    their required and provided interfaces. The purpose is to test the flow of (meaningless) 
-    data in the architecture for evaluating the synchronization of its components. In this
-    phase, you should investigate available libraries and arrange them in your architecture
-    in a suitable way.
-
- 2. Define a simple keyboard-based interface to inject into the architecture the relevant stimulus
-   for the robot behaviour, i.e., sensor data or state variables that it needs to *sense*. The 
-   objective is to test the software without introducing uncontrollable sources of errors, e.g., 
-   that might be due to sensors.
-
- 3. Implement the components in charge to control the robot's behaviour. In this example, it will
-    be a Finite States Machine, which is tested with the simple interfaces developed in 2.
- 
- 4. Make the interfaces developed in 2 based on randomised approaches and not on a keyboard
-   interface anymore. This is done to stress the logic of your architecture and the 
-   synchronization of its software components. In this phase, you should also introduce border 
-   case situations to further stress the architecture.
-
- 5. Write scripts to automatically evaluate if the randomized robot behaviour is consistent, 
-   e.g., though *if* statements and *timestamp* comparison.
-
- 6. Develop the actual implementation (and configure the relevant dependencies) of a single 
-   software component developed in 1 with a dummy implementation.
-
- 7. Test the component implemented in 6 through the script developed in 5.
-
- 8. Go to 6 and loop until each component is implemented.
-
- 9. Test the overall architecture, finalize the documentation and refactor the code appropriately.
-
-This repository contains the components of an architecture based on the 1-st, 2-nd and 4-th 
-steps, while the 3-rd is the main task that you should tackle during the exercise. As far as the 
-exercise is concerned, the 5-th step is optional, and the 6-th will be addressed in the next 
-parts of the Experimental Robotics Laboratory course; as far as some specific components are 
-concerned.
+This assignment involves the implementation of a watchdog robot in an interior setting where it must periodically visit each room while primarily remaining in the corridors. The robot also has a battery, which is gradually depleted with each walk across a room. The major objective of this study was to incorporate the finite state machine utilizing Smach, which enables you to adjust the environment-based states of the robot based on its location and battery level. The environment is generally separated into the following 7 rooms and 7 doors:
+* Room E: The robot's starting location, which also houses the charging station.
+* Corridor 1: Next to room E, accessible from another corridor through doors D7 or D5.
+* Corridor 2: Located next to room E and accessible by door D6 or door D5 from another corridor. 
+* Room R1: A room that can be entered from corridor 1 through door D1. 
+* Room R2: A room that can be accessed from corridor 1 through door D2.
+* Room R3: This room is reachable from corridor 2 via door D3.
+* Room R4: This room is reachable from corridor 2 via door D4.
 
 ## Scenario
 
