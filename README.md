@@ -11,13 +11,13 @@ The documentation can be found [here](https://jabrail-chumakov.github.io/Robot-w
 ## Introduction
 
 This assignment involves the implementation of a watchdog robot in an interior setting where it must periodically visit each room while primarily remaining in the corridors. The robot also has a battery, which is gradually depleted with each walk across a room. The major objective of this study was to incorporate the finite state machine utilizing Smach, which enables you to adjust the environment-based states of the robot based on its location and battery level. The environment is generally separated into the following 7 rooms and 7 doors:
-* Room E: The robot's starting location, which also houses the charging station.
-* Corridor 1: Next to room E, accessible from another corridor through doors D7 or D5.
-* Corridor 2: Located next to room E and accessible by door D6 or door D5 from another corridor. 
-* Room R1: A room that can be entered from corridor 1 through door D1. 
-* Room R2: A room that can be accessed from corridor 1 through door D2.
-* Room R3: This room is reachable from corridor 2 via door D3.
-* Room R4: This room is reachable from corridor 2 via door D4.
+* **Room E:** The robot's starting location, which also houses the charging station.
+* **Corridor 1:** Next to room E, accessible from another corridor through doors D7 or D5.
+* **Corridor 2:** Located next to room E and accessible by door D6 or door D5 from another corridor. 
+* **Room R1:** A room that can be entered from corridor 1 through door D1. 
+* **Room R2:** A room that can be accessed from corridor 1 through door D2.
+* **Room R3:** This room is reachable from corridor 2 via door D3.
+* **Room R4:** This room is reachable from corridor 2 via door D4.
 
 ## Scenario
 
