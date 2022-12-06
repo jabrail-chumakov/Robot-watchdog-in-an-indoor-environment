@@ -1,15 +1,3 @@
-.. image:: https://img.shields.io/pypi/v/colorama.svg
-    :target: https://pypi.org/project/colorama/
-    :alt: Latest Version
-
-.. image:: https://img.shields.io/pypi/pyversions/colorama.svg
-    :target: https://pypi.org/project/colorama/
-    :alt: Supported Python versions
-
-.. image:: https://github.com/tartley/colorama/actions/workflows/test.yml/badge.svg
-    :target: https://github.com/tartley/colorama/actions/workflows/test.yml
-    :alt: Build Status
-
 # Robot watchdog in an indoor environment
 A ROS-based exercise for the Experimental Robotics Laboratory course held at the University of Genoa. 
 Author: [Jabrail Chumakov](https://github.com/jabrail-chumakov)
