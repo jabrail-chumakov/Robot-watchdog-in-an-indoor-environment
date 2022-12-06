@@ -1,6 +1,6 @@
-# Robot Architecture Skeleton
+# Robot watchdog in an indoor environment
 **A ROS-based exercise for the Experimental Robotics Laboratory course held at the University of Genoa.**  
-Author: *Luca Buoncomapgni*
+Author: *Jabrail Chumakov*
 
 ---
 ## Documentation
