@@ -19,6 +19,8 @@ This assignment involves the implementation of a watchdog robot in an interior s
 * **Room R3:** This room is reachable from corridor 2 via door D3.
 * **Room R4:** This room is reachable from corridor 2 via door D4.
 
+I've made the assumption that the entire environment is a **20 x 20** square with the origin in the top left corner for the sake of convenience. The figure below shows further assumptions that were made regarding the coordinates of the beginning point as well as the locations in each of the rooms.
+
 ## Scenario
 
 The scenario involves a pet-like robot with the following behaviour.
