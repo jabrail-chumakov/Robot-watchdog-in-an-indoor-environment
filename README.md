@@ -25,6 +25,9 @@ I've made the assumption that the entire environment is a **20 x 20** square wit
   <img width="400" height="400" src="https://user-images.githubusercontent.com/67557966/206316608-e73a44a9-af54-4e36-9ce8-8f25c863ee2c.jpg">
 </p>
 
+## Installation
+
+
 ## Scenario
 
 The scenario involves a pet-like robot with the following behaviour.
@@ -42,7 +45,7 @@ The scenario involves a pet-like robot with the following behaviour.
    interaction ends due to a speech-based command and the battery is not low, the robot returns
    to move randomly.
 
-### Assumptions
+## Software Architecture
 
 For simplicity and showing purposes, we consider a scenario with the following assumptions.
  - The robot moves in a 2D environment without obstacles.
@@ -68,6 +71,12 @@ recharging its battery. This implies that the Finite States Machine should never
 other words, the Finite States Machine should process speech-based, gesture-based, and 
 battery-based events as soon as they occur. Furthermore, we consider that the Finite States 
 Machine does not allow for concurrent states.
+
+## Software Architecture
+
+## Temporal Diagram
+
+## State Diagram
 
 ## Project Structure
 
@@ -489,9 +498,6 @@ In addition, the Finite States Machine should have the following functionalities
 Note that, in Python, ROS subscribes run on separate threads. Thus, you 
 need to use `mutexes` to assure data consistency across concurrent threads.
 
-# A Solution
-
-A possible solution to this exercise is available in the [Wiki](https://github.com/buoncubi/arch_skeleton/wiki/Noetic-Py3-Solution)
-of this repository.
+## Video demonstration
 
 ---
