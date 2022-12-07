@@ -22,7 +22,7 @@ This assignment involves the implementation of a watchdog robot in an interior s
 I've made the assumption that the entire environment is a **20 x 20** square with the origin in the top left corner for the sake of convenience. The figure below shows further assumptions that were made regarding the coordinates of the beginning point as well as the locations in each of the rooms.
 
 <p align="center">
-  <img width="400" height="400" src="https://user-images.githubusercontent.com/67557966/206030657-f3eeae6b-ce1e-4db1-851e-baaebcef928e.jpg">
+  <img width="400" height="400" src="https://user-images.githubusercontent.com/67557966/206316608-e73a44a9-af54-4e36-9ce8-8f25c863ee2c.jpg">
 </p>
 
 ## Scenario
