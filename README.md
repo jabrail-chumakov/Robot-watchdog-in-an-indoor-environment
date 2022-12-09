@@ -27,6 +27,8 @@ I've made the assumption that the entire environment is a **20 x 20** square wit
 
 ## Installation
 
+You must first create a new folder in your catkin workspace called "robot_watchdog_in_an_indoor_environment" and then git clone these files there in order to execute this simulation. You also need to install a few third-party libraries ([colorama](https://pypi.org/project/colorama/)) that I utilized for this project.
+
 
 ## Scenario
 
