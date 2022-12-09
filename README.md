@@ -28,9 +28,12 @@ I've made the assumption that the entire environment is a **20 x 20** square wit
 ## Installation
 
 You must first create a new folder in your catkin workspace called "robot_watchdog_in_an_indoor_environment" and then git clone these files there in order to execute this simulation. You also need to install a few third-party libraries such as [colorama](https://pypi.org/project/colorama/) and [xterm](https://installati.one/ubuntu/21.04/xterm/) that I utilized for this project. Colorama is a Python library that allows you to print colored text on terminals that support ANSI escape sequences. This can be useful for creating colorful output in your Python programs, especially when working in the command line. XTerm is a terminal emulator for the X Window System. It is a program that allows users to interact with the Unix-like operating system using a command-line interface. XTerm supports a wide range of features, including color schemes, scrollback buffer, customizable fonts and key bindings, and support for international character sets. After that you can write the following command to execute launch file:
+
 ```bash
 $ roslaunch robot_watchdog_in_an_indoor_environment topological_map.launch
 ```
+
+Inside `topological_map.launch` file you can edit other nodes to add an output screen to the terminal or xterm.
 
 
 ## Scenario
