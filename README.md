@@ -500,8 +500,6 @@ need to use `mutexes` to assure data consistency across concurrent threads.
 
 ## Video demonstration
 
-<p align="center">
-  [<img src="https://youtu.be/oVrAHOfNHNc" width="80%">]
-</p>
+[<img src="https://user-images.githubusercontent.com/67557966/206757072-fc9b14c4-52ad-4594-9308-0a2355f47035.png" width="70%">](https://youtu.be/oVrAHOfNHNc)
 
 ---
