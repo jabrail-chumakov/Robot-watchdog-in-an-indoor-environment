@@ -27,31 +27,18 @@ I've made the assumption that the entire environment is a **20 x 20** square wit
 
 ## Installation
 
-You must first create a new folder in your catkin workspace called "robot_watchdog_in_an_indoor_environment" and then git clone these files there in order to execute this simulation. You also need to install a few third-party libraries such as [colorama](https://pypi.org/project/colorama/) and [xterm](https://installati.one/ubuntu/21.04/xterm/) that I utilized for this project. Colorama is a Python library that allows you to print colored text on terminals that support ANSI escape sequences. This can be useful for creating colorful output in your Python programs, especially when working in the command line. XTerm is a terminal emulator for the X Window System. It is a program that allows users to interact with the Unix-like operating system using a command-line interface. XTerm supports a wide range of features, including color schemes, scrollback buffer, customizable fonts and key bindings, and support for international character sets. After that you can write the following command to execute launch file:
+- You must first create a new folder in your catkin workspace called "robot_watchdog_in_an_indoor_environment" and then git clone these files there in order to execute this simulation. 
+- You also need to install a few third-party libraries such as [colorama](https://pypi.org/project/colorama/) and [xterm](https://installati.one/ubuntu/21.04/xterm/) that I utilized for this project. 
+
+Colorama is a Python library that allows you to print colored text on terminals that support ANSI escape sequences. This can be useful for creating colorful output in your Python programs, especially when working in the command line. XTerm is a terminal emulator for the X Window System. It is a program that allows users to interact with the Unix-like operating system using a command-line interface. XTerm supports a wide range of features, including color schemes, scrollback buffer, customizable fonts and key bindings, and support for international character sets. 
+
+- After that you can write the following command to execute launch file:
 
 ```bash
 $ roslaunch robot_watchdog_in_an_indoor_environment topological_map.launch
 ```
 
 Inside `topological_map.launch` file you can edit other nodes to add an output screen to the terminal or xterm.
-
-
-## Scenario
-
-The scenario involves a pet-like robot with the following behaviour.
- - Normally, the robot moves randomly in the environment (e.g., in a room).
- - When the battery is low, the robot immediately stops and waits for charging. For simplicity, we 
-   do not control the robot toward a specific location to recharge its battery.
- - When a user issues specific speech-based commands a human-robot interaction phase starts or 
-   stops, i.e., *called* (e.g., "Come here!", "Hi!", etc.) or *greeted* (e.g., "Bye", "Stop", 
-   etc.), respectively.
- - When the interaction starts, the robot moves toward the user and waits for a pointing gesture. 
-   The gesture is performed by the user to indicate a position in the environment.
- - When the pointing gesture is provided, the robot moves toward such a position.
- - When the pointed position is reached, the robot comes back to the user.
- - The above three points are repeated until the interaction ends or the battery is low. When the
-   interaction ends due to a speech-based command and the battery is not low, the robot returns
-   to move randomly.
 
 ## Software Architecture
 
@@ -71,24 +58,11 @@ For simplicity and showing purposes, we consider a scenario with the following a
  - The battery can become low at any time, and the robot should immediately react to this event.
  - The user does not move.
 
-### Synchronization
-
-An important aspect of this exercise is the synchronization between the robot and the user. In
-particular, the user should never wait for the robot to complete an action, except when it is
-recharging its battery. This implies that the Finite States Machine should never be blocked. In
-other words, the Finite States Machine should process speech-based, gesture-based, and 
-battery-based events as soon as they occur. Furthermore, we consider that the Finite States 
-Machine does not allow for concurrent states.
-
-## Software Architecture
-
 ## Temporal Diagram
 
 ## State Diagram
 
-## Project Structure
-
-### Package List
+## Package List
 
 This repository contains a ROS package named `arch_skeleton` that includes the following resources.
  - [CMakeList.txt](CMakeList.txt): File to configure this package.
@@ -130,7 +104,7 @@ This repository contains a ROS package named `arch_skeleton` that includes the f
       of each *node*, *topic*, *server*, *actions* and *parameters* used in this architecture.
  - [diagrams/](diagrams/): It contains the diagrams shown below in this README file.
 
-### Dependencies
+## Dependencies
 
 The software exploits [roslaunch](http://wiki.ros.org/roslaunch) and 
 [rospy](http://wiki.ros.org/rospy) for using python with ROS. Rospy allows defining ROS nodes, 
@@ -147,248 +121,6 @@ this repository should be based on [SMACH](http://wiki.ros.org/smach). You can c
 [tutorials](http://wiki.ros.org/smach/Tutorials) related to SMACH, for an overview of its 
 functionalities. In addition, you can exploit the [smach_viewer](http://wiki.ros.org/smach_viewer)
 node to visualize and debug the implemented Finite States Machine.
-
-## Software Components
-
-It follows the details of each software component implemented in this repository, which is available
-in the `scripts/` folder.
-
-### The `speech-eval` Node, its Message and Parameters
-
-<img src="https://github.com/buoncubi/arch_skeleton/blob/main/diagrams/speech-eval.png" width="600">
-
-The `speech-eval` node is a simple publisher that produces `Speech` messages in the 
-`/sensor/speech` topic. Each generated message has two fields: a time `stamp` and a 
-`command`. The latter is a string equal to `"Hello"`, when the interaction should start, or
-`"Bye"` when the interaction should end. Such keywords can be configured through the 
-`config/speech_commands` parameter (detailed below).
-
-This node allows publishing messages from the keyboard or in a randomized manner, and this can 
-be chosen with the `test/random_sense/active` parameter detailed below. When random messages are
-published, the `test/random_sense/speech_time` parameter is used to delay the generated 
-commands, which might not always be consistent for accounting perception errors (e.g., the command 
-`"???"` is sometimes published).
-
-To observe the behaviour of the `speech-eval` node you can run the following commands.
-```bash
-roscore
-# Open a new terminal.
-rosparam set config/speech_commands '["Hello", "Bye"]'
-rosrun arch_skeleton speech.py 
-# Open a new terminal
-rostopic echo /sensor/speech
-```
-With `rosparam` you might also set the `test/random_sense/active` and  
-`test/random_sense/speech_time` parameters (detailed below) to see how messages are differently
-published.
-
-### The `gesture-eval` Node, its Message and Parameters
-
-<img src="https://github.com/buoncubi/arch_skeleton/blob/main/diagrams/gesture-eval.png" width="600">
-
-The `gesture-eval` node is a simple publisher that produces `Gesture` messages in the 
-`sensor/gesture` topic. Each generated message has two fields: a time `stamp` and a `coordinate`.
-The latter is of type `Point` (defined in the `msg/` folder), which has two `float` sub-fields, 
-i.e., `x` and `y`.
-
-This node allows publishing messages from the keyboard or in a randomized manner, and this can be
-chosen with the `test/random_sense/active` parameter detailed below. When random messages are
-published, the `test/random_sense/gesture_time` parameter is used to delay the generated 
-messages, which encode a `coordinate` with random `x` and `y` based on the 
-`config/environment_size` parameter detailed below. To simulate possible perception error, this 
-node might generate `coordinates` that are out of the environment.
-
-
-To observe the behaviour of the `gesture-eval` node you can run the following commands.
-```bash
-roscore
-# Open a new terminal.
-rosparam set config/environment_size '[10,10]'
-rosrun arch_skeleton gesture.py 
-# Open a new terminal
-rostopic echo /sensor/gesture 
-```
-With `rosparam` you might also set the `test/random_sense/active` and  
-`test/random_sense/gesture_time` parameters (detailed below) to see how messages are differently 
-published.
-
-### The `robot-state` Node, its Messages and Parameters
-
-<img src="https://github.com/buoncubi/arch_skeleton/blob/main/diagrams/robot-state.png" width="900">
-
-The `robot-state` is a node that encodes the knowledge shared among the other components, and it 
-implements two services (i.e., `state/set_pose` and `state/get_pose`) and a publisher (i.e., 
-`state/battery_low`). 
-
-The services allow setting and getting the current robot position, which is shared between the 
-`planner` and the `controller` as detailed below. In particular, the `state/set_pose` requires a 
-`Point` to be set and returns nothing, while the `state/get_pose` requires nothing and return
-a `Point` encoding the robot pose. 
-
-Note that a client should set the initial robot position when the architecture startups. 
-
-Also, note that, for more general architectures, the robot pose might be published in a topic, 
-instead of being provided through a server. This is because many components might require the 
-current robot pose, which might change frequently. However, this example does not consider such a case.
-
-Moreover, the `robot-state` also implements a publisher of `Boolean` messages into the `state/
-battery_low` topic. This message is published when the batter changes state. We consider two 
-possible states: low battery (i.e., `True` is published) and recharged (i.e., `False` is 
-published).
-
-The battery-related publisher allows publishing messages from the keyboard or in a randomized 
-manner, and this can be chosen with the `test/random_sense/active` parameter detailed below. 
-When random messages are published, the `test/random_sense/battery_time` parameter is used to 
-delay the published messages.
-
-To observe the behaviour of the `robot-state` node you can run the following commands.
-```bash
-roscore
-# Open a new terminal.
-rosrun arch_skeleton robot-state.py 
-# Open a new terminal
-rostopic echo /state/battery_low 
-# Open a new terminal 
-rosservice call /state/set_pose "pose: { x: 1.11,  y: 2.22}"
-rosservice call /state/get_pose "{}" 
-```
-With `rosparam` you might also set the `test/random_sense/active` and  
-`test/random_sense/battery_time` parameters (detailed below) to see how messages are 
-differently published.
-
-### The `planner` Node, its Message and Parameters
-
-<img src="https://github.com/buoncubi/arch_skeleton/blob/main/diagrams/planner.png" width="900">
-
-The `planner` node implements an action server named `motion/planner`. This is done by the 
-means of the `SimpleActionServer` class based on the `Plan` action message. This action server 
-requires the `state/get_pose/` service of the `robot-state` node, and a `target` point given as goal.
-
-Given the current and target points, this component returns a plan as a list of `via_points`, 
-which are randomly generated for simplicity. The number of `via_points` can be set with the 
-`test/random_plan_points` parameter addressed below. Moreover, each `via_point` is provided 
-after a delay to simulate computation, which can be tuned through the `test/random_plan_time` 
-parameter. When a new `via_points` is generated, the updated plan is provided as `feedback`. When
-all the `via_points` have been generated, the plan is provided as `results`.
-
-While the picture above shows the actual implementation of the action server, you should not 
-interact with it through the shown topics directly. Instead, you should use a 
-[SimpleActionClient](https://docs.ros.org/en/api/actionlib/html/classactionlib_1_1simple__action__client_1_1SimpleActionClient.html), 
-for instance, as:
-```python
-import actionlib
-from arch_skeleton.msg import PlanAction, PlanGoal
-...
-# Initialize the client and, eventually, wait for the server.
-client = actionlib.SimpleActionClient('motion/planner', PlanAction)
-client.wait_for_server()
-...
-def feedback_callback(feedback):
-    # Do something when feedback is provided.
-    pass  
-...
-def done_callback(status, results):
-    # Do something when results are provided.
-    pass  
-...
-# Send a new `goal`, which is a message of type `PlanGoal`.
-client.send_goal(goal, done_cb = done_callback, feedback_cb = feedback_callback)
-...
-# Get the action server state.
-client.get_state()
-...
-# Cancel all goals (or the current goal only, i.e., `client.cancel_goal()`).
-client.cancel_all_goals()
-```
-
-To observe the behaviour of the `planner` you can run the following commands.
-``` bash
-roscore
-# Open a new terminal.
-rosrun arch_skeleton robot_states.py
-# Open a new terminal.
-rosservice call /state/set_pose "pose: { x: 0.11,  y: 0.22}"
-rosparam set config/environment_size '[10,10]'
-rosrun arch_skeleton planner.py
-# Open a new terminal.
-rosrun actionlib_tools axclient.py /motion/planner
-```
-Then, a GUI should appear. Set the goal you want to reach and hit the send button. Eventually, you
-can cancel the goal as well. Also, you can change the `test/random_plan_points` and 
-`test/random_plan_time` parameters (detailed below) to tune the behaviour of the planner.
-
-The last command of the above fragment of code requires the `actionlib-tools` package, which can
-be installed done by typing:
-```bash
-sudo apt update
-sudo apt install ros-noetic-actionlib-tools
-```
-
-
-### The `controller` Node, its Message and Parameters
-
-<img src="https://github.com/buoncubi/arch_skeleton/blob/main/diagrams/controller.png" width="900">
-
-The `controller` node implements an action server named `motion/controller`. This is done by 
-the means of the `SimpleActionServer` class based on the `Control` action message. This action 
-server requires the `state/set_pose/` service of the `robot-state` node and a plan given as a 
-list of `via_points` by the `planner`.
-
-Given the plan and the current robot position, this component iterates for each planned 
-`via_point` and waits to simulate the time spent moving the robot to that location. The 
-waiting time can be tuned through the `test/random_motion_time` parameter detailed below. Each 
-time a `via_point` is reached the `state/set_pose` service is invoked, and a `feedback` is 
-provided. When the last `via_point` is reached, the action service provides a result by 
-propagating the current robot position, which has been already updated through the 
-`state/set_pose` service.
-
-Similarly to the `planner` above, instead of using the raw topics, you can rely on a 
-`SimpleActionClient`, which should be instantiated as:
-```python
-client = actionlib.SimpleActionClient('motion/controller', ControlAction)
-```
-This client would accept goals of type `ControlGoal`.
-
-To observe the behaviour of the `controller` you can run the following commands.
-``` bash
-roscore
-# Open a new terminal.
-rosrun arch_skeleton robot_states.py
-# Open a new terminal.
-rosservice call /state/set_pose "pose: { x: 0.11,  y: 0.22}"
-#rosparam set config/environment_size '[10,10]'
-rosrun arch_skeleton controller.py
-# Open a new terminal.
-rosrun actionlib_tools axclient.py /motion/controller
-```
-Then, the same GUI seen for the `planner` should appear. In this case, you can test goals 
-formatted as:
-```yaml
-via_points: 
-  - 
-    x: 0.109999999404
-    y: 0.219999998808
-  - 
-    x: 3.61638021469
-    y: 5.05489301682
-  - 
-    x: 0.292526483536
-    y: 6.59786701202
-  - 
-    x: 4.33828830719
-    y: 7.73262834549
-  - 
-    x: 6.0
-    y: 6.0
-```
-You can also change the `test/random_motion_time` parameter (detailed below) to tune
-the behaviour of the controller.
-
-## Launching the Software
-
-This software has been based on ROS Noetic, and it has been developed with this Docker-based
-[environment](https://hub.docker.com/repository/docker/carms84/exproblab), which already 
-provides the required dependencies listed above. 
 
 ### Installation
 
