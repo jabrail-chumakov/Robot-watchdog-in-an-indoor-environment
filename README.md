@@ -43,6 +43,21 @@ $ roslaunch robot_watchdog_in_an_indoor_environment topological_map.launch
 
 Inside `topological_map.launch` file you can edit other nodes to add an output screen to the terminal or xterm.
 
+The software exploits [roslaunch](http://wiki.ros.org/roslaunch) and 
+[rospy](http://wiki.ros.org/rospy) for using python with ROS. Rospy allows defining ROS nodes, 
+services and related messages.
+
+Also, the software uses [actionlib](http://wiki.ros.org/actionlib/DetailedDescription) to define
+action servers. In particular, this software is based on 
+[SimpleActionServer](http://docs.ros.org/en/jade/api/actionlib/html/classactionlib_1_1simple__action__server_1_1SimpleActionServer.html#a2013e3b4a6a3cb0b77bb31403e26f137).
+Thus, you should use the [SimpleActionClient](https://docs.ros.org/en/api/actionlib/html/classactionlib_1_1simple__action__client_1_1SimpleActionClient.html)
+to solve the exercise.
+
+The Finite States Machine that I used in this project based on [SMACH](http://wiki.ros.org/smach). You can check the 
+[tutorials](http://wiki.ros.org/smach/Tutorials) related to SMACH, for an overview of its 
+functionalities. In addition, you can exploit the [smach_viewer](http://wiki.ros.org/smach_viewer)
+node to visualize and debug the implemented Finite States Machine.
+
 ## Software Architecture
 
 For simplicity and showing purposes, we consider a scenario with the following assumptions.
@@ -106,24 +121,6 @@ This repository contains a ROS package named `arch_skeleton` that includes the f
     - [architecture_name_mapper.py](scripts/architecture_name_mapper.py): It contains the name 
       of each *node*, *topic*, *server*, *actions* and *parameters* used in this architecture.
  - [diagrams/](diagrams/): It contains the diagrams shown below in this README file.
-
-## Dependencies
-
-The software exploits [roslaunch](http://wiki.ros.org/roslaunch) and 
-[rospy](http://wiki.ros.org/rospy) for using python with ROS. Rospy allows defining ROS nodes, 
-services and related messages.
-
-Also, the software uses [actionlib](http://wiki.ros.org/actionlib/DetailedDescription) to define
-action servers. In particular, this software is based on 
-[SimpleActionServer](http://docs.ros.org/en/jade/api/actionlib/html/classactionlib_1_1simple__action__server_1_1SimpleActionServer.html#a2013e3b4a6a3cb0b77bb31403e26f137).
-Thus, you should use the [SimpleActionClient](https://docs.ros.org/en/api/actionlib/html/classactionlib_1_1simple__action__client_1_1SimpleActionClient.html)
-to solve the exercise.
-
-The Finite States Machine that you will implement based on the software components provided in 
-this repository should be based on [SMACH](http://wiki.ros.org/smach). You can check the 
-[tutorials](http://wiki.ros.org/smach/Tutorials) related to SMACH, for an overview of its 
-functionalities. In addition, you can exploit the [smach_viewer](http://wiki.ros.org/smach_viewer)
-node to visualize and debug the implemented Finite States Machine.
 
 ## Video demonstration
 
