@@ -27,7 +27,7 @@ I've made the assumption that the entire environment is a **20 x 20** square wit
 
 ## Installation
 
-You must first create a new folder in your catkin workspace called "robot_watchdog_in_an_indoor_environment" and then git clone these files there in order to execute this simulation. You also need to install a few third-party libraries such as [colorama](https://pypi.org/project/colorama/) that I utilized for this project. After that you can write the following command to execute launch file:
+You must first create a new folder in your catkin workspace called "robot_watchdog_in_an_indoor_environment" and then git clone these files there in order to execute this simulation. You also need to install a few third-party libraries such as [colorama](https://pypi.org/project/colorama/) and [xterm](https://installati.one/ubuntu/21.04/xterm/) that I utilized for this project. Colorama is a Python library that allows you to print colored text on terminals that support ANSI escape sequences. This can be useful for creating colorful output in your Python programs, especially when working in the command line. After that you can write the following command to execute launch file:
 ```bash
 $ roslaunch robot_watchdog_in_an_indoor_environment topological_map.launch
 ```
