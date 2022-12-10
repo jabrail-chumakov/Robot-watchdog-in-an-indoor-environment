@@ -1,4 +1,4 @@
-# Robot watchdog in an indoor environment
+# <img src="https://user-images.githubusercontent.com/67557966/206814922-97bb77f5-e22d-4c57-9305-a03ac2743efd.png" width="5%" height="5%"> Robot watchdog in an indoor environment
 
 A ROS-based exercise for the Experimental Robotics Laboratory course held at the University of Genoa.
 
