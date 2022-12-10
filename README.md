@@ -4,11 +4,11 @@ A ROS-based exercise for the Experimental Robotics Laboratory course held at the
 
 Author: [Jabrail Chumakov](https://github.com/jabrail-chumakov)
 
-## Documentation
+## <img src="https://user-images.githubusercontent.com/67557966/206814981-d1297a1d-dcdd-403e-af7c-09a4381b28a2.png" width="5%" height="5%"> Documentation
 
 The documentation can be found [here](https://jabrail-chumakov.github.io/Robot-watchdog-in-an-indoor-environment/)
 
-## Introduction
+## <img src="https://user-images.githubusercontent.com/67557966/206815462-747ddfde-04db-4143-837a-256282f3651d.png" width="5%" height="5%"> Introduction
 
 This assignment involves the implementation of a watchdog robot in an interior setting where it must periodically visit each room while primarily remaining in the corridors. The robot also has a battery, which is gradually depleted with each walk across a room. The major objective of this study was to incorporate the finite state machine utilizing Smach, which enables you to adjust the environment-based states of the robot based on its location and battery level. The environment is generally separated into the following 7 rooms and 7 doors:
 * **Room E:** The robot's starting location, which also houses the charging station.
@@ -25,7 +25,7 @@ I've made the assumption that the entire environment is a **20 x 20** square wit
   <img width="400" height="400" src="https://user-images.githubusercontent.com/67557966/206316608-e73a44a9-af54-4e36-9ce8-8f25c863ee2c.jpg">
 </p>
 
-## Installation
+## <img src="https://user-images.githubusercontent.com/67557966/206816524-f958630f-b19d-4195-89b2-6fd6371d400b.png" width="5%" height="5%"> Installation
 
 Follow these steps to install the software.
  - Clone this repository inside your ROS workspace (which should be sourced in your `.bashrc`) and name it `robot_watchdog_in_an_indoor_environment`.
@@ -58,7 +58,7 @@ The Finite States Machine that I used in this project based on [SMACH](http://wi
 functionalities. In addition, you can exploit the [smach_viewer](http://wiki.ros.org/smach_viewer)
 node to visualize and debug the implemented Finite States Machine.
 
-## Software 
+## <img src="https://user-images.githubusercontent.com/67557966/206817137-e914ebdf-1bc6-4565-a21d-ece2751eb222.png" width="5%" height="5%"> Software 
 
 The specific **software architecture** of a robot deployed in an indoor environment for surveillance purposes would depend on the specific design and programming of the robot. However, in general, the robot's software architecture could be divided into a number of different components, each with a specific role and function. Some potential components of the robot's software architecture could include:
 
@@ -90,11 +90,11 @@ The **states diagrams** of a robot deployed in an indoor environment for surveil
 - Alert: In this state, the robot has detected a potential threat or anomaly, and it is taking action to respond to the situation. This could include things like sounding an alarm, sending a notification to security personnel, or taking a photo or video of the threat.
 - Sleep: In this state, the robot is powered down or in a low-power mode to conserve energy. It may enter this state when it is not actively performing any tasks, or when it has completed its patrol of the space.
 
-## Video demonstration
+## <img src="https://user-images.githubusercontent.com/67557966/206817629-1e16e808-8c7f-4814-b2d1-e462ca7293b0.png" width="5%" height="5%"> Video demonstration
 
 [<img src="https://user-images.githubusercontent.com/67557966/206757072-fc9b14c4-52ad-4594-9308-0a2355f47035.png" width="70%">](https://youtu.be/oVrAHOfNHNc)
 
-## Working hypothesis
+## <img src="https://user-images.githubusercontent.com/67557966/206817931-2a30ae94-d10d-43d4-8492-70423cd0d2be.png" width="5%" height="5%"> Working hypothesis
 
 If a robot is deployed in an indoor environment for surveillance purposes, its main objective would be to move around the space and visit different locations within the space in order to gather information and monitor the environment. The robot may be equipped with sensors and cameras to allow it to navigate the space and collect data, and it may also have some means of communication, such as a loudspeaker, to alert occupants of the space or security personnel of any potential threats. In order to fulfill its objective of visiting different locations and staying there for a certain amount of time, the robot may be programmed with a set of rules and protocols that dictate its behavior and movements. This could include things like how long to stay in each location, how to prioritize certain areas over others, and how to avoid obstacles or other potential hazards in the environment.
 
@@ -104,7 +104,7 @@ The robot begins at position E and waits for data before beginning to construct 
 
 In this project, it was also expected that the surroundings would be `20 by 20` and that the robot's mobility would begin at `(x, y) | (7.0, 2.0)`. When the battery level drops below a certain point, it then moves in a random direction.
  
-### System's features
+### <img src="https://user-images.githubusercontent.com/67557966/206818026-39ff9871-af32-403d-b8f2-6f47c67d4b4a.png" width="5%" height="5%"> System's features
 
 If a robot is deployed in an indoor environment for surveillance purposes, its system may include a number of features designed to help it fulfill its objective of visiting different locations and staying there for a certain amount of time. Some potential system features could include:
 
@@ -117,7 +117,7 @@ If a robot is deployed in an indoor environment for surveillance purposes, its s
 
 In my instance, I added a battery that enables the robot to run up to its threshold. I should go back to the base room to rest after that. Additionally, the user can examine the robot's current location and direction straight from the `smach viewer`.
 
-### System's limitations
+### <img src="https://user-images.githubusercontent.com/67557966/206818143-1b16e859-2602-46ee-b252-ebc4e1dc0ad7" width="5%" height="5%"> System's limitations
 
 While a robot deployed in an indoor environment for surveillance purposes may have a number of useful features, it is also likely to have some limitations. Some potential limitations of such a system could include:
 
@@ -127,7 +127,7 @@ While a robot deployed in an indoor environment for surveillance purposes may ha
 - Limited power: If the robot relies on a battery or other power source, it may need to be recharged or replaced frequently, which could limit its ability to operate continuously.
 - Limited data processing and analysis: If the robot is collecting a large amount of data, it may have difficulty processing and analyzing all of the information in real-time, which could lead to potential threats being missed or overlooked.
 
-### Possible technical Improvements
+### <img src="https://user-images.githubusercontent.com/67557966/206818238-659a2844-463a-446a-b274-e113975b4cab.png" width="5%" height="5%"> Possible technical improvements
 
 There are a number of potential technical improvements that could be made to a robot deployed in an indoor environment for surveillance purposes. Some potential improvements could include:
 
