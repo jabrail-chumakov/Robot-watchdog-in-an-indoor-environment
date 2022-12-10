@@ -80,50 +80,50 @@ For simplicity and showing purposes, we consider a scenario with the following a
 
 ## State Diagram
 
-## Package List
-
-This repository contains a ROS package named `arch_skeleton` that includes the following resources.
- - [CMakeList.txt](CMakeList.txt): File to configure this package.
- - [package.xml](package.xml): File to configure this package.
- - [setup.py](setup.py): File to `import` python modules from the `utilities` folder into the 
-   files in the `script` folder. 
- - [launcher/](launcher/): Contains the configuration to launch this package.
-    - [manual_sense.launch](launcher/manual_sense.launch): It launches this package allowing 
-       for keyboard-based interface.
-    - [random_sense.launch](launcher/random_sense.launch): It launches this package with 
-      random-based stimulus.
- - [msg/](msg/): It contains the message exchanged through ROS topics.
-    - [Gesture.msg](msg/Gesture.msg): It is the message representing detected pointing gestures.
-    - [Speech.msg](msg/Speech.msg): It is the message representing speech-based commands.
-    - [Point.msg](msg/Point.msg): It is the message representing a 2D point.
- - [srv/](srv/): It Contains the definition of each server used by this software.
-    - [GetPose.srv](srv/GetPose.srv): It defines the request and response to get the current 
-      robot position.
-    - [SetPose.srv](srv/SetPose.srv): It defines the request and response to set the current 
-      robot position.
- - [action/](action/): It contains the definition of each action server used by this software.
-    - [Plan.action](action/Plan.action): It defines the goal, feedback and results concerning 
-      motion planning.
-    - [Control.action](action/Control.action): It defines the goal, feedback and results 
-      concerning motion controlling.
- - [scripts/](scripts/): It contains the implementation of each software components.
-    - [speech.py](scripts/speech.py): It is a dummy implementation of the speech-based 
-      commands detection algorithm.
-    - [gesture.py](scripts/gesture.py): It is a dummy implementation of the gesture-based
-      commands detection algorithm.
-    - [robot_state.py](scripts/robot_state.py): It implements the robot state including:
-      current position, and battery level.
-    - [planner.py](scripts/planner.py): It is a dummy implementation of a motion planner.
-    - [controller.py](scripts/controller.py): It is a dummy implementation of a motion 
-      controller.
- - [utilities/arch_skeleton/](utilities/arch_skeleton/): It contains auxiliary python files, 
-   which are exploited by the files in the `scripts` folder.
-    - [architecture_name_mapper.py](scripts/architecture_name_mapper.py): It contains the name 
-      of each *node*, *topic*, *server*, *actions* and *parameters* used in this architecture.
- - [diagrams/](diagrams/): It contains the diagrams shown below in this README file.
-
 ## Video demonstration
 
 [<img src="https://user-images.githubusercontent.com/67557966/206757072-fc9b14c4-52ad-4594-9308-0a2355f47035.png" width="70%">](https://youtu.be/oVrAHOfNHNc)
 
----
+## Working hypothesis
+
+If a robot is deployed in an indoor environment for surveillance purposes, its main objective would be to move around the space and visit different locations within the space in order to gather information and monitor the environment. The robot may be equipped with sensors and cameras to allow it to navigate the space and collect data, and it may also have some means of communication, such as a loudspeaker, to alert occupants of the space or security personnel of any potential threats. In order to fulfill its objective of visiting different locations and staying there for a certain amount of time, the robot may be programmed with a set of rules and protocols that dictate its behavior and movements. This could include things like how long to stay in each location, how to prioritize certain areas over others, and how to avoid obstacles or other potential hazards in the environment.
+
+The robot begins at position E and waits for data before beginning to construct the topological map. The robot shifts to a new position and waits there for a while before going somewhere else. This behavior keeps happening indefinitely. When the robot's battery is low, it travels to location E and waits there for a while before resuming the aforementioned behavior. The robot should navigate between locations according to the following rule while its battery is not low:
+- It should primarily remain in corridors.
+- It should visit a reachable room if it hasn't been seen in a while.
+
+In this project, it was also expected that the surroundings would be `20 by 20` and that the robot's mobility would begin at `(x, y) | (7.0, 2.0)`. When the battery level drops below a certain point, it then moves in a random direction.
+ 
+### System's features
+
+If a robot is deployed in an indoor environment for surveillance purposes, its system may include a number of features designed to help it fulfill its objective of visiting different locations and staying there for a certain amount of time. Some potential system features could include:
+
+- Sensors and cameras to allow the robot to navigate the space and gather data.
+- A means of communication, such as a loudspeaker, to alert occupants of the space or security personnel of any potential threats.
+- A set of rules and protocols governing the robot's behavior and movements, such as how long to stay in each location and how to prioritize certain areas over others.
+- Obstacle avoidance capabilities to help the robot navigate around potential hazards in the environment.
+- A power source, such as a battery or external power supply, to keep the robot running for extended periods of time.
+- A network connection, such as Wi-Fi or cellular, to allow the robot to communicate with other systems or send data to a remote location for analysis.
+
+In my instance, I added a battery that enables the robot to run up to its threshold. I should go back to the base room to rest after that. Additionally, the user can examine the robot's current location and direction straight from the `smach viewer`.
+
+### System's limitations
+
+While a robot deployed in an indoor environment for surveillance purposes may have a number of useful features, it is also likely to have some limitations. Some potential limitations of such a system could include:
+
+- Limited mobility: The robot may not be able to navigate all areas of the space, particularly if there are tight corners, narrow passageways, or other obstacles that are difficult for the robot to navigate.
+- Limited sensor range: The robot's sensors and cameras may not be able to detect threats or gather data from all areas of the space, particularly if there are large objects blocking the sensors' line of sight or if the sensors are not powerful enough to detect distant objects.
+- Limited communication range: If the robot relies on a wireless connection to communicate with other systems or send data to a remote location, it may be limited by the range of the wireless signal, which can be disrupted by obstacles or other interference.
+- Limited power: If the robot relies on a battery or other power source, it may need to be recharged or replaced frequently, which could limit its ability to operate continuously.
+- Limited data processing and analysis: If the robot is collecting a large amount of data, it may have difficulty processing and analyzing all of the information in real-time, which could lead to potential threats being missed or overlooked.
+
+### Possible technical Improvements
+
+There are a number of potential technical improvements that could be made to a robot deployed in an indoor environment for surveillance purposes. Some potential improvements could include:
+
+- Visual data: This project will be more challenging if it is implemented using Rviz and Gazebo, which could improve our understanding of robot movement and require the implementation of an obstacle avoidance algorithm.
+- Improved mobility: The robot could be equipped with advanced navigation and obstacle avoidance capabilities, allowing it to move more easily and efficiently through the space. This could include things like better sensors, more powerful motors, and advanced algorithms for planning and executing movements.
+- Improved sensor range: The robot's sensors and cameras could be made more powerful, allowing them to detect threats and gather data from a wider area. This could include things like higher resolution cameras, longer range sensors, and advanced image processing algorithms to extract more information from the data.
+- Improved communication range: The robot could be equipped with a more powerful wireless communication system, allowing it to maintain a strong signal over longer distances and in the presence of obstacles or other interference. This could include things like advanced antennas, higher frequency bands, and better error correction algorithms.
+- Improved power: The robot could be equipped with a more efficient power system, allowing it to operate for longer periods of time without needing to be recharged or replaced. This could include things like better batteries, more efficient motors, and advanced power management algorithms.
+- Improved data processing and analysis: The robot could be equipped with more powerful processors and algorithms for analyzing the data it collects, allowing it to identify potential threats more quickly and accurately. This could include things like better machine learning algorithms, more efficient data structures, and advanced parallel processing techniques.
