@@ -60,9 +60,28 @@ node to visualize and debug the implemented Finite States Machine.
 
 ## Software 
 
+The specific software architecture of a robot deployed in an indoor environment for surveillance purposes would depend on the specific design and programming of the robot. However, in general, the robot's software architecture could be divided into a number of different components, each with a specific role and function. Some potential components of the robot's software architecture could include:
+
+- Navigation and movement: This component would be responsible for controlling the robot's movements, including its speed, direction, and trajectory. It would use data from the robot's sensors and cameras to avoid obstacles and navigate the space, and it would be able to respond to commands or changes in the environment.
+- Data collection and analysis: This component would be responsible for gathering data from the robot's sensors and cameras, as well as any other sources of information, such as external databases or other systems. It would then use algorithms and data structures to process and analyze the data, looking for potential threats or anomalies.
+- Decision making and action: This component would be responsible for making decisions based on the data gathered and analyzed by the robot. It would use a set of rules or protocols to determine the appropriate course of action in response to different situations, and it would be able to initiate actions, such as sounding an alarm or sending a notification, as needed.
+- Communication: This component would be responsible for managing the robot's communication with other systems, such as security personnel or other surveillance robots. It would handle the transmission and receipt of data, as well as any necessary encoding or encryption.
+
+Generally, the robot's software architecture would likely involve a complex combination of components, each working together to enable the robot to fulfill its surveillance objectives.
+
 <p align="center">
   <img width="657" height="201.5" src="https://user-images.githubusercontent.com/67557966/206814146-e68fbba2-7fab-4ae3-b3d8-afcdacc8c8e6.png">
 </p>
+
+The temporal diagram of a robot deployed in an indoor environment for surveillance purposes would likely depend on the specific details of its design and programming. However, in general, the robot's behavior could be described as follows:
+
+- The robot begins by powering on and initializing its systems, including its sensors, cameras, and communication equipment.
+- The robot then enters a "patrol" mode, in which it moves around the space, visiting different locations and staying in each location for a certain amount of time.
+- While in patrol mode, the robot uses its sensors and cameras to gather data about the environment, looking for potential threats or other anomalies.
+- If the robot detects a potential threat or anomaly, it may take a number of actions, such as sounding an alarm, sending a notification to security personnel, or taking a photo or video of the threat.
+- Once the robot has completed its patrol of the space, it may enter a "sleep" mode to conserve power, or it may return to the beginning of its patrol route to start again.
+
+Overall, the temporal diagram of the robot's behavior would likely involve a combination of movement, data gathering, and decision making, with the specific details and timing of these actions depending on the specific design and programming of the robot.
 
 ## Video demonstration
 
