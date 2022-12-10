@@ -117,7 +117,7 @@ If a robot is deployed in an indoor environment for surveillance purposes, its s
 
 In my instance, I added a battery that enables the robot to run up to its threshold. I should go back to the base room to rest after that. Additionally, the user can examine the robot's current location and direction straight from the `smach viewer`.
 
-### <img src="https://user-images.githubusercontent.com/67557966/206818143-1b16e859-2602-46ee-b252-ebc4e1dc0ad7" width="5%" height="5%"> System's limitations
+### <img src="https://user-images.githubusercontent.com/67557966/206818143-1b16e859-2602-46ee-b252-ebc4e1dc0ad7.png" width="5%" height="5%"> System's limitations
 
 While a robot deployed in an indoor environment for surveillance purposes may have a number of useful features, it is also likely to have some limitations. Some potential limitations of such a system could include:
 
