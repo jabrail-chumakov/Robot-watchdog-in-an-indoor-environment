@@ -58,27 +58,11 @@ The Finite States Machine that I used in this project based on [SMACH](http://wi
 functionalities. In addition, you can exploit the [smach_viewer](http://wiki.ros.org/smach_viewer)
 node to visualize and debug the implemented Finite States Machine.
 
-## Software Architecture
+## Software 
 
-For simplicity and showing purposes, we consider a scenario with the following assumptions.
- - The robot moves in a 2D environment without obstacles.
- - Given a current and target position, the robot plans a trajectory to follow, i.e., a list of via 
-   points. Then, it follows the trajectory by reaching each via point. The distance between via
-   points is small enough to disregard the positions within two via points (e.g., for 
-   representing the current robot pose).
- - The user can only say simple (and predefined) commands to the robot through the speech-based 
-   interface. The speech-based commands can be given at any time, and they might be wrongly
-   detected.
- - A pointing gesture is valid only when the interaction occurs. If more gestures are provided,
-   the robot should consider the more recent one.
- - The user can point to a 2D location at any time. The location might be out of the environment, 
-   i.e, it can refer to a position that is unreachable by the robot.
- - The battery can become low at any time, and the robot should immediately react to this event.
- - The user does not move.
-
-## Temporal Diagram
-
-## State Diagram
+<p align="center">
+  <img width="657" height="201.5" src="https://user-images.githubusercontent.com/67557966/206814146-e68fbba2-7fab-4ae3-b3d8-afcdacc8c8e6.png">
+</p>
 
 ## Video demonstration
 
